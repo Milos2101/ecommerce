@@ -31,9 +31,7 @@ public class UsersService {
             throw new UsersException("Email je prazan");
         }
 
-        if (user.getAddress() != null) {
-            user.getAddress().setUser(user);
-        }
+
 
         user.getOrders().forEach(order -> {
             order.setUser(user);

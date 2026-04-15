@@ -11,7 +11,7 @@ public class OrderScheduler {
 
     @Inject
     private OrderService orderService;
-    @Scheduled(every = "60s")
+    @Scheduled(every = "120s")
     public void checkOrdersCount(){
         System.out.println("scheduler se pokrenuo");
         Long count = orderService.getOrdersCount();

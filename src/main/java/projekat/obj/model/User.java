@@ -9,7 +9,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 @NamedQuery(name = User.GET_ALL_USERS, query = "Select u.id, u.name, u.email FROM User u")
-@NamedQuery(name = User.GET_USER_BY_NAME, query = "Select u FROM  User u where u.name = :nameS")
+@NamedQuery(
+        name = User.GET_USER_BY_NAME,
+        query = "SELECT DISTINCT u FROM User u WHERE u.name = :nameS"
+)
 public class User {
 
     public static final String GET_ALL_USERS = "GetAllUsers";
@@ -23,20 +26,22 @@ public class User {
     private String name;
     private String email;
 
+    public User() {
+    }
     public User(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    public User() {
-    }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Address address;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Address address ;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Orders> orders = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<Orders> orders;
 
     public Long getId() {
         return id;
