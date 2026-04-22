@@ -1,5 +1,7 @@
 package projekat.obj.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -8,10 +10,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-@NamedQuery(name = User.GET_ALL_USERS, query = "Select u.id, u.name, u.email FROM User u")
+@NamedQuery(name = User.GET_ALL_USERS, query = "Select u FROM User u")
 @NamedQuery(
         name = User.GET_USER_BY_NAME,
-        query = "SELECT DISTINCT u FROM User u WHERE u.name = :nameS"
+        query = "SELECT DISTINCT u.id, u.name, u.email FROM User u WHERE u.name = :nameS"
 )
 public class User {
 
@@ -28,6 +30,7 @@ public class User {
 
     public User() {
     }
+
     public User(Long id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -35,13 +38,19 @@ public class User {
     }
 
 
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TimeResponse> timeResponses = new ArrayList<>();
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Address address ;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private List<Orders> orders;
+    private List<Orders> orders = new ArrayList<>();;
+
 
     public Long getId() {
         return id;
@@ -80,6 +89,14 @@ public class User {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+
+    public List<TimeResponse> getTimeResponses() {
+        return timeResponses;
+    }
+
+    public void setTimeResponses(List<TimeResponse> timeResponses) {
+        this.timeResponses = timeResponses;
     }
 
     @Override
