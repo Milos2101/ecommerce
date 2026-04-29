@@ -64,5 +64,13 @@ public class UsersService {
         List<Orders> orders = em.createNamedQuery(Orders.GET_ORDERS_BY_STUDENT_ID, Orders.class).setParameter("idS", id).getResultList();
         return orders;
     }
-}
 
+    public User getUserById(Long id) {
+        return em.find(User.class, id);
+    }
+
+    @Transactional
+    public User updateUser(User user) {
+        return em.merge(user);
+    }
+}

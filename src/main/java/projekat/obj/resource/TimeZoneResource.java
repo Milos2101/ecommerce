@@ -1,7 +1,5 @@
 package projekat.obj.resource;
-
 import projekat.obj.rest.client.IpClient;
-import projekat.obj.rest.client.TimeZoneClient;
 import projekat.obj.rest.client.TimeZoneClient;
 import projekat.obj.model.User;
 import projekat.obj.model.TimeResponse;
@@ -12,7 +10,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import projekat.obj.model.User;
+
 
 @Path("/timezone")
 public class TimeZoneResource {

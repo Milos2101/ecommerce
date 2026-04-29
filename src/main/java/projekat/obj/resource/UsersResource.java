@@ -13,7 +13,6 @@ import projekat.obj.service.UsersService;
 import java.util.List;
 
 @Path("/user")
-
 public class UsersResource {
 
     @Inject
@@ -31,6 +30,9 @@ public class UsersResource {
         }
         return Response.ok().build();
     }
+
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
    @Path("/getAllUsers")

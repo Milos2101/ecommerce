@@ -1,5 +1,6 @@
 package projekat.obj.model;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -15,6 +16,8 @@ import java.util.Objects;
         name = User.GET_USER_BY_NAME,
         query = "SELECT DISTINCT u.id, u.name, u.email FROM User u WHERE u.name = :nameS"
 )
+
+
 public class User {
 
     public static final String GET_ALL_USERS = "GetAllUsers";
@@ -50,6 +53,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Orders> orders = new ArrayList<>();;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<CurrencyResponse> currencyResponses = new ArrayList<>();
 
 
     public Long getId() {
@@ -97,6 +105,14 @@ public class User {
 
     public void setTimeResponses(List<TimeResponse> timeResponses) {
         this.timeResponses = timeResponses;
+    }
+
+    public List<CurrencyResponse> getCurrencyResponses() {
+        return currencyResponses;
+    }
+
+    public void setCurrencyResponses(List<CurrencyResponse> currencyResponses) {
+        this.currencyResponses = currencyResponses;
     }
 
     @Override
