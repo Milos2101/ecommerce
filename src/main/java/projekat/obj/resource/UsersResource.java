@@ -6,10 +6,14 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import projekat.obj.exception.UsersException;
+import projekat.obj.model.MultipartBody;
 import projekat.obj.model.Orders;
 import projekat.obj.model.User;
 import projekat.obj.service.UsersService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Path("/user")
@@ -61,5 +65,19 @@ public class UsersResource {
         List <Orders> orders = usersService.getOrdersByUserId(id);
         return Response.ok().entity(orders).build();
   }
-}
 
+  @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Path("/addUserImage")
+    public Response addImageToUser(MultipartBody multipartBody){
+
+        try {
+            Files.copy(multipartBody.file.uploadedFile(), java.nio.file.Path.of("C:\\Users\\PC\\OneDrive\\Desktop\\imagesProject", multipartBody.file.fileName()), StandardCopyOption.REPLACE_EXISTING);
+        }catch(IOException e){
+                return Response.serverError().build();
+
+      }
+        return Response.ok().build();
+  }
+
+}

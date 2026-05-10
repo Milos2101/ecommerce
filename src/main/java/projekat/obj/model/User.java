@@ -31,6 +31,16 @@ public class User {
     private String name;
     private String email;
 
+    private String filePath;
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     public User() {
     }
 
@@ -127,7 +137,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
+        return Objects.hash(id, name, filePath, email);
     }
 
     @Override
@@ -136,6 +146,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ",  filePath='" + filePath + '\'' +
                 '}';
     }
 }
